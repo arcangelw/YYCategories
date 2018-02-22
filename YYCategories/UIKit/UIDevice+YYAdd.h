@@ -189,3 +189,12 @@ NS_ASSUME_NONNULL_END
 #ifndef kiOS9Later
 #define kiOS9Later (kSystemVersion >= 9)
 #endif
+
+#ifndef kiOS10Later
+#define kiOS10Later (kSystemVersion >= 10)
+#endif
+
+/// iOS11 xcode9开始支持新的运行时检测 后续不在扩展 建议不在使用
+#ifndef kiOS11Later
+#define kiOS11Later (kSystemVersion >= 11)
+#endif

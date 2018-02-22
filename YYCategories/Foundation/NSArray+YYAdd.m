@@ -127,11 +127,11 @@ YYSYNTH_DUMMY_CLASS(NSArray_YYAdd)
 }
 
 - (void)appendObject:(id)anObject {
-    [self addObject:anObject];
+    if (anObject)[self addObject:anObject];
 }
 
 - (void)prependObject:(id)anObject {
-    [self insertObject:anObject atIndex:0];
+    if (anObject)[self insertObject:anObject atIndex:0];
 }
 
 - (void)appendObjects:(NSArray *)objects {

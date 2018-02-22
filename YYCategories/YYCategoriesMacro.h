@@ -137,6 +137,7 @@ YY_EXTERN_C_BEGIN
     }];
 
  */
+/** RAC兼容
 #ifndef weakify
     #if DEBUG
         #if __has_feature(objc_arc)
@@ -168,7 +169,7 @@ YY_EXTERN_C_BEGIN
         #endif
     #endif
 #endif
-
+*/
 
 /**
  Convert CFRange to NSRange
