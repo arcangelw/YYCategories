@@ -61,6 +61,8 @@ YYSYNTH_DUMMY_CLASS(UIScreen_YYAdd);
             if ([model isEqualToString:@"iPhone8,2"]) return CGSizeMake(1080, 1920);
             if ([model isEqualToString:@"iPhone9,2"]) return CGSizeMake(1080, 1920);
             if ([model isEqualToString:@"iPhone9,4"]) return CGSizeMake(1080, 1920);
+            if ([model isEqualToString:@"iPhone10,2"]) return CGSizeMake(1080, 1920);
+            if ([model isEqualToString:@"iPhone10,5"]) return CGSizeMake(1080, 1920);
         }
         if ([model hasPrefix:@"iPad"]) {
             if ([model hasPrefix:@"iPad6,7"]) size = CGSizeMake(2048, 2732);
@@ -130,6 +132,16 @@ YYSYNTH_DUMMY_CLASS(UIScreen_YYAdd);
             @"iPhone9,2" : @401, //@"iPhone 7 Plus",
             @"iPhone9,3" : @326, //@"iPhone 7",
             @"iPhone9,4" : @401, //@"iPhone 7 Plus",
+            @"iPhone10,1" : @326, //@"iPhone 8",
+            @"iPhone10,2" : @401, //@"iPhone 8 Plus",
+            @"iPhone10,3" : @458, //@"iPhone X",
+            @"iPhone10,4" : @326, //@"iPhone 8",
+            @"iPhone10,5" : @401, //@"iPhone 8 Plus",
+            @"iPhone10,6" : @458, //@"iPhone X",
+            @"iPhone11,2" : @458, //@"iPhone XS",
+            @"iPhone11,4" : @458, //@"iPhone XS Max",
+            @"iPhone11,6" : @458, //@"iPhone XS Max",
+            @"iPhone11,8" : @326, //@"iPhone XR",
 
             @"iPad1,1" : @132, //@"iPad 1",
             @"iPad2,1" : @132, //@"iPad 2 (WiFi)",
@@ -162,6 +174,14 @@ YYSYNTH_DUMMY_CLASS(UIScreen_YYAdd);
             @"iPad6,4" : @324, //@"iPad Pro (9.7 inch)",
             @"iPad6,7" : @264, //@"iPad Pro (12.9 inch)",
             @"iPad6,8" : @264, //@"iPad Pro (12.9 inch)",
+            @"iPad6,11" : @264, //@"iPad 5",
+            @"iPad6,12" : @264, //@"iPad 5",
+            @"iPad7,1" : @264, //@"iPad Pro (12.9 inch) 2",
+            @"iPad7,2" : @264, //@"iPad Pro (12.9 inch) 2",
+            @"iPad7,3" : @264, //@"iPad Pro (10.5 inch)",
+            @"iPad7,4" : @264, //@"iPad Pro (10.5 inch)",
+            @"iPad7,5" : @264, //@"iPad 6",
+            @"iPad7,6" : @264, //@"iPad 6",
             };
         NSString *model = [UIDevice currentDevice].machineModel;
         if (model) {

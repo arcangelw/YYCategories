@@ -27,6 +27,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// Device system version (e.g. 8.1)
 + (double)systemVersion;
 
+/// Whether the device is All X-Series Devices
+@property (nonatomic ,readonly) BOOL isXSeriesDevice;
+@property (nonatomic ,readonly) BOOL isIPhoneX;
+@property (nonatomic ,readonly) BOOL isIPhoneXs;
+@property (nonatomic ,readonly) BOOL isIPhoneXsMax;
+@property (nonatomic ,readonly) BOOL isIPhoneXr;
+
 /// Whether the device is iPad/iPad mini.
 @property (nonatomic, readonly) BOOL isPad;
 
