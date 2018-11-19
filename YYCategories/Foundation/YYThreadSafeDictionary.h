@@ -24,6 +24,6 @@
  use enumerate using block instead. When enumerate or sort with block/callback,
  do *NOT* send message to the dictionary inside the block/callback.
  */
-@interface YYThreadSafeDictionary : NSMutableDictionary
+@interface YYThreadSafeDictionary<KeyType, ObjectType> : NSMutableDictionary<KeyType, ObjectType>
 
 @end

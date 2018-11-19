@@ -24,6 +24,6 @@
  use enumerate using block instead. When enumerate or sort with block/callback,
  do *NOT* send message to the array inside the block/callback.
  */
-@interface YYThreadSafeArray : NSMutableArray
+@interface YYThreadSafeArray<ObjectType> : NSMutableArray<ObjectType>
 
 @end
