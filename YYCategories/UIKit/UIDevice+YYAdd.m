@@ -19,6 +19,8 @@
 #include <ifaddrs.h>
 #import "YYCategoriesMacro.h"
 #import "NSString+YYAdd.h"
+#import "YYCGUtilities.h"
+#import "UIApplication+YYAdd.h"
 
 YYSYNTH_DUMMY_CLASS(UIDevice_YYAdd)
 
@@ -39,87 +41,18 @@ YYSYNTH_DUMMY_CLASS(UIDevice_YYAdd)
     static BOOL isXSeriesDevice;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        isXSeriesDevice = self.isIPhoneX || self.isIPhoneXs || self.isIPhoneXsMax || self.isIPhoneXr;
-//        /// 优先用已知的 device's machine model 判断设备
-//        NSString *machineModelName = [self machineModelName];
-//        NSArray * names = @[@"iPhone X",@"iPhone XS",@"iPhone XS Max",@"iPhone XR"];
-//        if (machineModelName && [names containsObject:machineModelName] ) {
-//            isXSeriesDevice = YES;
-//        }else{
-//            CGSize size = [UIScreen mainScreen].bounds.size;
-//            isXSeriesDevice = (CGSizeEqualToSize(size, CGSizeMake(375, 812)) ||
-//                               CGSizeEqualToSize(size, CGSizeMake(812, 375)) ||
-//                               CGSizeEqualToSize(size, CGSizeMake(414, 896)) ||
-//                               CGSizeEqualToSize(size, CGSizeMake(896, 414)));
-//        }
+        isXSeriesDevice = CGSizeEqualToSize(YYScreenSize(), CGSizeMake(375, 812)) ||
+            CGSizeEqualToSize(YYScreenSize(), CGSizeMake(414, 896)) ||
+            CGSizeEqualToSize(YYScreenSize(), CGSizeMake(390, 844)) ||
+            CGSizeEqualToSize(YYScreenSize(), CGSizeMake(428, 926));
+        /// 此处对未知设备根据安全区做一个兼容
+        if (!isXSeriesDevice && [UIWindow instancesRespondToSelector:@selector(safeAreaInsets)]) {
+            isXSeriesDevice = [UIApplication windowSafeAreaInsets].top > 0.0;
+        }
     });
     return isXSeriesDevice;
 }
 
-- (BOOL)isIPhoneX
-{
-    static BOOL iPhoneX;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSString *machineModelName = [self machineModelName];
-        if ([machineModelName isEqualToString:@"iPhone X"]) {
-            iPhoneX = YES;
-        }else{
-            CGSize size = [UIScreen mainScreen].bounds.size;
-            iPhoneX = (CGSizeEqualToSize(size, CGSizeMake(375, 812)) || CGSizeEqualToSize(size, CGSizeMake(812, 375)));
-        }
-    });
-    return iPhoneX;
-}
-
-- (BOOL)isIPhoneXs
-{
-    static BOOL isIPhoneXs;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSString *machineModelName = [self machineModelName];
-        if ([machineModelName isEqualToString:@"iPhone XS"]) {
-            isIPhoneXs = YES;
-        }else{
-            CGSize size = [UIScreen mainScreen].bounds.size;
-            isIPhoneXs = (CGSizeEqualToSize(size, CGSizeMake(375, 812)) || CGSizeEqualToSize(size, CGSizeMake(812, 375)));
-        }
-    });
-    return isIPhoneXs;
-}
-
-- (BOOL)isIPhoneXsMax
-{
-    static BOOL isIPhoneXsMax;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSString *machineModelName = [self machineModelName];
-        if ([machineModelName isEqualToString:@"iPhone XS Max"]) {
-            isIPhoneXsMax = YES;
-        }else{
-            CGSize size = [UIScreen mainScreen].bounds.size;
-            isIPhoneXsMax = (CGSizeEqualToSize(size, CGSizeMake(414, 896)) || CGSizeEqualToSize(size, CGSizeMake(896, 414)));
-        }
-    });
-    return isIPhoneXsMax;
-}
-
-- (BOOL)isIPhoneXr
-{
-    static BOOL isIPhoneXr;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSString *machineModelName = [self machineModelName];
-        if ([machineModelName isEqualToString:@"iPhone XR"]) {
-            isIPhoneXr = YES;
-        }else{
-            CGSize size = [UIScreen mainScreen].bounds.size;
-            isIPhoneXr = (CGSizeEqualToSize(size, CGSizeMake(414, 896)) || CGSizeEqualToSize(size, CGSizeMake(896, 414)));
-        }
-    });
-    return isIPhoneXr;
-}
-        
 - (BOOL)isPad {
     static dispatch_once_t one;
     static BOOL pad;
@@ -347,6 +280,19 @@ static yy_net_interface_counter yy_get_net_interface_counter() {
             @"Watch4,2" : @"Apple Watch Series 4 44mm",
             @"Watch4,3" : @"Apple Watch Series 4 40mm",
             @"Watch4,4" : @"Apple Watch Series 4 44mm",
+            @"Watch5,1" : @"Apple Watch Series 5 40mm",
+            @"Watch5,2" : @"Apple Watch Series 5 44mm",
+            @"Watch5,3" : @"Apple Watch Series 5 40mm",
+            @"Watch5,4" : @"Apple Watch Series 5 44mm",
+            @"Watch5,9" : @"Apple Watch SE 40mm",
+            @"Watch5,10" : @"Apple Watch SE 44mm",
+            @"Watch5,11" : @"Apple Watch SE 40mm",
+            @"Watch5,12" : @"Apple Watch SE 44mm",
+            @"Watch6,1" : @"Apple Watch Series 6 40mm",
+            @"Watch6,2" : @"Apple Watch Series 6 44mm",
+            @"Watch6,3" : @"Apple Watch Series 6 40mm",
+            @"Watch6,4" : @"Apple Watch Series 6 44mm",
+            
             
             @"iPod1,1" : @"iPod touch 1",
             @"iPod2,1" : @"iPod touch 2",
@@ -354,6 +300,7 @@ static yy_net_interface_counter yy_get_net_interface_counter() {
             @"iPod4,1" : @"iPod touch 4",
             @"iPod5,1" : @"iPod touch 5",
             @"iPod7,1" : @"iPod touch 6",
+            @"iPod9,1" : @"iPod touch 7",
             
             @"iPhone1,1" : @"iPhone 1G",
             @"iPhone1,2" : @"iPhone 3G",
@@ -387,6 +334,14 @@ static yy_net_interface_counter yy_get_net_interface_counter() {
             @"iPhone11,4" : @"iPhone XS Max",
             @"iPhone11,6" : @"iPhone XS Max",
             @"iPhone11,8" : @"iPhone XR",
+            @"iPhone12,1" : @"iPhone 11",
+            @"iPhone12,3" : @"iPhone 11 Pro",
+            @"iPhone12,5" : @"iPhone 11 Pro Max",
+            @"iPhone12,8" : @"iPhone SE 2",
+            @"iPhone13,1" : @"iPhone 12 mini",
+            @"iPhone13,2" : @"iPhone 12",
+            @"iPhone13,3" : @"iPhone 12 Pro",
+            @"iPhone13,4" : @"iPhone 12 Pro Max",
             
             @"iPad1,1" : @"iPad 1",
             @"iPad2,1" : @"iPad 2 (WiFi)",
@@ -427,6 +382,28 @@ static yy_net_interface_counter yy_get_net_interface_counter() {
             @"iPad7,4" : @"iPad Pro (10.5 inch)",
             @"iPad7,5" : @"iPad 6",
             @"iPad7,6" : @"iPad 6",
+            @"iPad7,11" : @"iPad 7",
+            @"iPad7,12" : @"iPad 7",
+            @"iPad8,1" : @"iPad Pro (11 inch)",
+            @"iPad8,2" : @"iPad Pro (11 inch)",
+            @"iPad8,3" : @"iPad Pro (11 inch)",
+            @"iPad8,4" : @"iPad Pro (11 inch)",
+            @"iPad8,5" : @"iPad Pro (12.9 inch) 3",
+            @"iPad8,6" : @"iPad Pro (12.9 inch) 3",
+            @"iPad8,7" : @"iPad Pro (12.9 inch) 3",
+            @"iPad8,8" : @"iPad Pro (12.9 inch) 3",
+            @"iPad8,9" : @"iPad Pro (11 inch) 2",
+            @"iPad8,10" : @"iPad Pro (11 inch) 2",
+            @"iPad8,11" : @"iPad Pro (12.9 inch) 4",
+            @"iPad8,12" : @"iPad Pro (12.9 inch) 4",
+            @"iPad11,1" : @"iPad mini 5",
+            @"iPad11,2" : @"iPad mini 5",
+            @"iPad11,6" : @"iPad 8",
+            @"iPad11,7" : @"iPad 8",
+            @"iPad11,3" : @"iPad Air 3",
+            @"iPad11,4" : @"iPad Air 3",
+            @"iPad13,1" : @"iPad Air 4",
+            @"iPad13,2" : @"iPad Air 4",
             
             @"AppleTV2,1" : @"Apple TV 2",
             @"AppleTV3,1" : @"Apple TV 3",

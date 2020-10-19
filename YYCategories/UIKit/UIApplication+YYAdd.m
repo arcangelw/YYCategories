@@ -32,6 +32,22 @@ YYSYNTH_DUMMY_CLASS(UIApplication_YYAdd)
 
 @implementation UIApplication (YYAdd)
 
++ (UIEdgeInsets)windowSafeAreaInsets
+{
+    UIWindow *window = [UIApplication sharedApplication].windows.firstObject;
+    if (![window isKeyWindow]) {
+        UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+        if (CGRectEqualToRect(keyWindow.bounds, [UIScreen mainScreen].bounds)) {
+            window = keyWindow;
+        }
+    }
+    if (@available(iOS 11.0, *)) {
+        UIEdgeInsets insets = [window safeAreaInsets];
+        return insets;
+    }
+    return UIEdgeInsetsZero;
+}
+
 - (NSURL *)documentsURL {
     return [[[NSFileManager defaultManager]
              URLsForDirectory:NSDocumentDirectory

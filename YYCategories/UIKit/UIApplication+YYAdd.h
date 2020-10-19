@@ -83,6 +83,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Same as sharedApplication, but returns nil in App Extension.
 + (nullable UIApplication *)sharedExtensionApplication;
 
+/// WindowSafeAreaInsets
+@property (class, nonatomic ,readonly) UIEdgeInsets windowSafeAreaInsets;
+
 @end
 
 NS_ASSUME_NONNULL_END
